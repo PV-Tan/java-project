@@ -12,6 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder // ✅ Thêm dòng này để hỗ trợ builder pattern (dùng cho CardItem)
 @Entity
 @Table(name = "products")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -38,7 +39,7 @@ public class Product {
     private BigDecimal salePrice = BigDecimal.ZERO;
 
     // NUMERIC DEFAULT 0
-    // CHECK (compare_price >= sale_price OR compare_price = 0) - Ràng buộc này được xử lý ở tầng Service/DB
+    // CHECK (compare_price >= sale_price OR compare_price = 0)
     @Column(name = "compare_price", nullable = false)
     private BigDecimal comparePrice = BigDecimal.ZERO;
 
@@ -58,8 +59,7 @@ public class Product {
     @Column(name = "product_description", columnDefinition = "TEXT", nullable = false)
     private String productDescription;
 
-    // VARCHAR(64) CHECK (product_type IN ('simple', 'variable')) - Cần validation ở Service
-    // Nên dùng Enum, nhưng dùng String theo yêu cầu
+    // VARCHAR(64) CHECK (product_type IN ('simple', 'variable'))
     @Column(name = "product_type", length = 64)
     private String productType;
 
